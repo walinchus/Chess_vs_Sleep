@@ -4,7 +4,7 @@ A mini-experiment you can do on your own to see how often you win chess games, d
 <img width="552" alt="image" src="https://github.com/walinchus/Chess_vs_Sleep/assets/25959269/2d15b7a5-d082-4fde-8987-1747ea87c6d8">
 
 
-Here is an example of my percent of games won versus on days when I had an adequate amount of sleep the day before versus when I did not. 
+My winning percentage on days when I had an adequate amount of sleep the day before versus when I did not. 
 
 ## You will need: 
 
