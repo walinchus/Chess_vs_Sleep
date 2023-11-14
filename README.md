@@ -1,6 +1,5 @@
 # Chess_vs_Sleep
-Seeing if sleep has any effect on chess playing
-This is a script to compare how well you play chess depending on how much sleep you have. 
+A mini-experiment you can do on your own to see how often you win chess games, depending on whether you get an adequate amount of sleep. 
 
 <img width="552" alt="image" src="https://github.com/walinchus/Chess_vs_Sleep/assets/25959269/2d15b7a5-d082-4fde-8987-1747ea87c6d8">
 
