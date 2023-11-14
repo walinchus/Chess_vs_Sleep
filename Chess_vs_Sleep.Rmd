@@ -1,0 +1,196 @@
+---
+title: "chess vs. sleep"
+output: html_document
+date: "2023-10-31"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(lubridate)
+library(bigchess)
+library(jsonlite)
+```
+
+## Bringing in data
+
+Chess games
+
+
+
+```{r}
+user <- "walinchess"
+library("rjson")
+json_file <- paste0("https://api.chess.com/pub/player/",user,"/games/archives")
+json_data <- fromJSON(paste(readLines(json_file), collapse=""))
+result <- data.frame()
+for(i in json_data$archives)
+result <- rbind(result,read.pgn(paste0(i,"/pgn")))
+```
+
+
+Sleep
+
+
+```{r pressure, echo=FALSE}
+setwd("~/Code/Chess_vs_Sleep/Chess_vs_Sleep/Sleep")
+sleep_basic <- rio::import("sleep_score.csv") %>% 
+  mutate(Date=as.Date(timestamp))
+
+```
+
+
+```{r}
+setwd("~/Code/Chess_vs_Sleep/Chess_vs_Sleep/Sleep")
+
+file_list <- list.files(pattern = "*.json")
+json_data_list <- list()
+
+
+for (file in file_list) {
+  json_data <- jsonlite::fromJSON(readLines(file, warn = F))
+  json_data_list <- c(json_data_list, list(json_data))
+}
+
+sleep <- purrr::map_dfr( json_data_list, rbind) %>% 
+  select(-type,-infoCode,logType,-levels)
+
+sleep$dateOfSleep <- as.Date(sleep$dateOfSleep)
+
+sleep <- sleep %>% 
+  filter(mainSleep==TRUE) %>% 
+  distinct() %>% 
+  filter(dateOfSleep!=as.Date("2023-09-29")) %>% #that must be an error
+  arrange(desc(dateOfSleep))
+
+
+
+
+sleep <- sleep %>% 
+  mutate(previous_night=lead(dateOfSleep)) %>% 
+  mutate(date_before=as.Date(dateOfSleep)-1) %>% 
+  mutate(complete_data=if_else(previous_night==date_before,1,0)) %>% 
+  mutate(two_nights_ago=lead(lead(dateOfSleep))) %>% 
+  mutate(two_dates_before=as.Date(dateOfSleep)-2) %>%
+  mutate(complete_data2=if_else(two_nights_ago==two_dates_before,1,0)) %>%
+  mutate(three_nights_ago=lead(lead(lead(dateOfSleep)))) %>% 
+  mutate(three_dates_before=as.Date(dateOfSleep)-3) %>%
+  mutate(complete_data3=if_else(three_nights_ago==three_dates_before,1,0)) %>% 
+  mutate(past_two_nights_sleep=minutesAsleep+lead(minutesAsleep)) %>% 
+  mutate(past_three_nights_sleep=minutesAsleep+lead(minutesAsleep)+lead(lead(minutesAsleep))) 
+
+
+```
+
+
+
+Noting percent won per day 
+
+```{r}
+chess <- result %>% 
+  filter(!Result=="1/2-1/2") %>% 
+  group_by(Date,Result) %>% 
+  summarize(Games=n()) %>% 
+  group_by(Date) %>% 
+  mutate(Pct_Won=Games/sum(Games)) %>% 
+  filter(Result=="1-0")
+
+chess$Date <- ymd(chess$Date)
+
+DT::datatable(chess)
+```
+
+
+Merging Data 
+
+```{r}
+data <- merge(chess, sleep, by.x="Date", by.y="dateOfSleep") %>% 
+  filter(Games>2)
+
+data2 <- merge(chess, sleep_basic, by.x="Date", by.y="Date") %>% 
+  filter(Games>2)
+```
+
+Looking at sleep versus percent won
+
+```{r}
+ggplot(data, aes(x=Pct_Won, y=minutesAsleep))+
+  geom_point()
+```
+
+
+
+```{r}
+ggplot(data, aes(x=Pct_Won, y=past_two_nights_sleep))+
+  geom_point()
+```
+
+
+
+
+
+```{r}
+ggplot(data, aes(x=Pct_Won, y=timeInBed))+
+  geom_point()
+```
+
+
+
+```{r}
+ggplot(data, aes(x=Pct_Won, y=minutesAsleep))+
+  geom_point()
+```
+
+
+
+```{r}
+ggplot(data, aes(x=Pct_Won, y=minutesAwake))+
+  geom_point()
+```
+
+
+
+
+
+```{r}
+
+library(ggpmisc)
+ggplot(data2, aes(x=Pct_Won, y=overall_score))+
+  geom_point()+
+  stat_poly_eq() +
+  geom_smooth()
+```
+
+
+```{r}
+ggplot(data2, aes(x=Pct_Won, y=revitalization_score))+
+  geom_point()+
+  stat_poly_eq() +
+  geom_smooth()
+```
+
+```{r}
+ggplot(data2, aes(x=Pct_Won, y=deep_sleep_in_minutes))+
+  geom_point()+
+  stat_poly_eq() +
+  geom_smooth()
+```
+
+```{r}
+ggplot(data2, aes(x=Pct_Won, y=restlessness))+
+  geom_point()+
+  stat_poly_eq() +
+  geom_smooth()
+```
+```{r}
+data <- data %>% 
+  mutate(less_than_6_hours_sleep=if_else(minutesAsleep<360,"Yes","No")) %>% 
+  mutate(greater_than_8_hours_sleep=if_else(minutesAsleep>480,"Yes","No"))
+```
+
+Making a visual of 
+
+
+
+
+
+
