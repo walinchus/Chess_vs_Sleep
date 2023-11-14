@@ -18,7 +18,7 @@ I love chess as it's all completely logical. There's no luck, it's all strategy.
 
 ## Setup
 
-I downloaded some data from Fitbit to see how often I win compared to how much sleep I got. This looks at 613 days where I played 7,590 games. I didn't always have data from my fitbit though for days when I'm charging it overnight. Also I took out days where I played only one game. So here we're looking at 389 days.
+I downloaded some data from Fitbit to see how often I win compared to how much sleep I get. This looks at 613 days where I played at least two chess games. I didn't always have data from my fitbit though for days when I'm charging it overnight. So here we're looking at 389 days.
 
 ## Analysis
 
