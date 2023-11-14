@@ -41,5 +41,8 @@ Overall I usually win about half of my games and lose half. Which is roughly how
 So to have a 2.5% increase is huge. Though keep in mind this is a very small section of my data. I defined "too little" sleep as less than 6 hours and enough as more than 8 hours.  
 <img width="323" alt="image" src="https://github.com/walinchus/Chess_vs_Sleep/assets/25959269/5781a3ef-b57b-4136-bded-c97e88e3544c">
 
+## Now It's Your turn 
+
+This isn't an official experiment. Obviously you can't draw conclusions from one person. But you can have a lot of fun with this. There's many additional things you could try here.  For example, you could use data from more people, look at cumulative sleep debt over time, see how bedtime affects things, etc. Posting with a creative commons license. (Share/share alike)
 But definitely a very different distribution: 
 <img width="555" alt="image" src="https://github.com/walinchus/Chess_vs_Sleep/assets/25959269/4ef85a4e-fb7d-4707-a856-4b72f4b2ec3f">
