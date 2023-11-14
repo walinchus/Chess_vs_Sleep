@@ -1,17 +1,17 @@
 # Chess_vs_Sleep
 Seeing if sleep has any effect on chess playing
-
-
 This is a script to compare how well you play chess depending on how much sleep you have. 
+
+<img width="552" alt="image" src="https://github.com/walinchus/Chess_vs_Sleep/assets/25959269/2d15b7a5-d082-4fde-8987-1747ea87c6d8">
+
+
+Here is an example of my percent of games won versus days when I had an adequate amount of sleep the day before and days when I did not. 
 
 ## You will need: 
 
 * Data from Fitbit.com (You have to request your own data)
 * data from chess.com (You can download your username or another's)
 * This code, written in R
-
-<img width="552" alt="image" src="https://github.com/walinchus/Chess_vs_Sleep/assets/25959269/2d15b7a5-d082-4fde-8987-1747ea87c6d8">
-Here is an example of my percent of games won versus days when I had an adequate amount of sleep the day before and days when I did not. 
 
 ## Background
 
