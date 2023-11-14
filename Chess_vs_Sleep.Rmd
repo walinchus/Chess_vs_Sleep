@@ -18,7 +18,7 @@ Chess games
 
 
 ```{r}
-user <- "walinchess"
+user <- "walinchess" #this is my username but put whatever you want here
 library("rjson")
 json_file <- paste0("https://api.chess.com/pub/player/",user,"/games/archives")
 json_data <- fromJSON(paste(readLines(json_file), collapse=""))
@@ -32,7 +32,7 @@ Sleep
 
 
 ```{r pressure, echo=FALSE}
-setwd("~/Code/Chess_vs_Sleep/Chess_vs_Sleep/Sleep")
+setwd("~/Code/Chess_vs_Sleep/Chess_vs_Sleep/Sleep") #You will need to request your own data from Fitbit. Obviously, for privacy reasons I'm not going to include the actual file. 
 sleep_basic <- rio::import("sleep_score.csv") %>% 
   mutate(Date=as.Date(timestamp))
 
